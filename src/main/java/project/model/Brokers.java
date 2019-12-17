@@ -1,18 +1,13 @@
-package project;
+package project.model;
 
 import org.cloudbus.cloudsim.DatacenterBroker;
 
-import java.util.ArrayList;
-import java.util.List;
+public class Brokers {
 
-class Brokers {
+    public DatacenterBroker broker;
 
-    private List<DatacenterBroker> brokers = new ArrayList<>();
-
-    Brokers(int numOfBrokers) {
-        for(int i=0;i<numOfBrokers;i++) {
-            brokers.add(createBroker(i));
-        }
+    public Brokers() {
+        broker = createBroker(0);
     }
 
     private DatacenterBroker createBroker(int id) {
@@ -24,9 +19,5 @@ class Brokers {
             var3.printStackTrace();
             return null;
         }
-    }
-
-    int getNumberOfBrokers() {
-        return brokers.size();
     }
 }

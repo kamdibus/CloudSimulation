@@ -1,14 +1,20 @@
 package project;
 
+import org.cloudbus.cloudsim.core.CloudSim;
+
+import java.util.Calendar;
+
 public class Main {
 
     public static void main(String[] args) {
-        AllocationStrategy allocationStrategy = new AllocationStrategy();
-        TaskQueue taskQueue = new TaskQueue(100);
-        Brokers brokers = new Brokers(10);
-        VMs vms = new VMs(15);
+        int numBrokers = 1;
+        Calendar calendar = Calendar.getInstance();
+        boolean trace_flag = false;
+        CloudSim.init(numBrokers, calendar, trace_flag);
 
-        Simulation simulation = new Simulation(allocationStrategy, taskQueue, brokers, vms);
+        AllocationStrategy allocationStrategy = new AllocationStrategy();
+
+        Simulation simulation = new Simulation(allocationStrategy);
 
         simulation.run();
     }
