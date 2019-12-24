@@ -38,12 +38,11 @@ public class Cluster {
         peList1.add(new Pe(1, new PeProvisionerSimple((double)mips)));
         peList2.add(new Pe(0, new PeProvisionerSimple((double)mips)));
         peList2.add(new Pe(1, new PeProvisionerSimple((double)mips)));
-        int hostId = 0;
         int ram = 2048;
         long storage = 1000000L;
         int bw = 10000;
-        hostList.add(new Host(hostId, new RamProvisionerSimple(ram), new BwProvisionerSimple((long)bw), storage, peList1, new VmSchedulerSpaceShared(peList1)));
-        hostList.add(new Host(hostId, new RamProvisionerSimple(ram), new BwProvisionerSimple((long)bw), storage, peList2, new VmSchedulerSpaceShared(peList2)));
+        hostList.add(new Host(0, new RamProvisionerSimple(ram), new BwProvisionerSimple((long)bw), storage, peList1, new VmSchedulerSpaceShared(peList1)));
+        hostList.add(new Host(1, new RamProvisionerSimple(ram), new BwProvisionerSimple((long)bw), storage, peList2, new VmSchedulerSpaceShared(peList2)));
         String arch = "x86";
         String os = "Linux";
         String vmm = "Xen";
