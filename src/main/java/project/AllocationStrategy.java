@@ -1,4 +1,0 @@
-package project;
-
-class AllocationStrategy {
-}

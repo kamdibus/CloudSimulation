@@ -1,6 +1,6 @@
 package project.model;
 
-import org.cloudbus.cloudsim.CloudletSchedulerTimeShared;
+import org.cloudbus.cloudsim.CloudletSchedulerSpaceShared;
 import org.cloudbus.cloudsim.Vm;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class VMs {
         String vmm = "Xen";
 
         IntStream.range(0,numOfVMs)
-                .forEach(id -> vms.add(new Vm(id, brokerId, (double)mips, pesNumber, ram, bw, size, vmm, new CloudletSchedulerTimeShared())));
+                .forEach(id -> vms.add(new Vm(id, brokerId, (double)mips, pesNumber, ram, bw, size, vmm, new CloudletSchedulerSpaceShared())));
     }
 
     public List<Vm> list() {

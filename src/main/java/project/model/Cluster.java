@@ -30,37 +30,57 @@ public class Cluster {
     }
 
     private Datacenter createDatacenter(String name) {
-        List<Host> hostList = new ArrayList<>();
-        List<Pe> peList1 = new ArrayList<>();
-        List<Pe> peList2 = new ArrayList<>();
-        int mips = 1000;
-        peList1.add(new Pe(0, new PeProvisionerSimple((double)mips)));
-        peList1.add(new Pe(1, new PeProvisionerSimple((double)mips)));
-        peList2.add(new Pe(0, new PeProvisionerSimple((double)mips)));
-        peList2.add(new Pe(1, new PeProvisionerSimple((double)mips)));
-        int ram = 2048;
-        long storage = 1000000L;
-        int bw = 10000;
-        hostList.add(new Host(0, new RamProvisionerSimple(ram), new BwProvisionerSimple((long)bw), storage, peList1, new VmSchedulerSpaceShared(peList1)));
-        hostList.add(new Host(1, new RamProvisionerSimple(ram), new BwProvisionerSimple((long)bw), storage, peList2, new VmSchedulerSpaceShared(peList2)));
-        String arch = "x86";
-        String os = "Linux";
-        String vmm = "Xen";
-        double time_zone = 10.0D;
-        double cost = 3.0D;
-        double costPerMem = 0.05D;
-        double costPerStorage = 0.001D;
-        double costPerBw = 0.0D;
+        List<Host> hostList = createHosts(5);
         LinkedList<Storage> storageList = new LinkedList<>();
-        DatacenterCharacteristics characteristics = new DatacenterCharacteristics(arch, os, vmm, hostList, time_zone, cost, costPerMem, costPerStorage, costPerBw);
+        DatacenterCharacteristics characteristics = createCharacteristics(hostList);
         Datacenter datacenter = null;
 
         try {
-            datacenter = new Datacenter(name, characteristics, new VmAllocationPolicySimple(hostList), storageList, 0.0D);
+            datacenter = new Datacenter(name, characteristics, new VmAllocationPolicySimple(hostList),
+                    storageList, 0.0D);
         } catch (Exception var26) {
             var26.printStackTrace();
         }
 
         return datacenter;
+    }
+
+    private List<Host> createHosts(int numOfHosts) {
+        List<Host> hostList = new ArrayList<>();
+
+        for(int i=0;i<numOfHosts;i++) {
+            List<Pe> peList = createPes(2);
+            int ram = 2048;
+            long storage = 1000000L;
+            int bw = 10000;
+            hostList.add(new Host(i, new RamProvisionerSimple(ram), new BwProvisionerSimple((long)bw),
+                    storage, peList, new VmSchedulerSpaceShared(peList)));
+        }
+
+        return hostList;
+    }
+
+    private List<Pe> createPes(int numOfPes) {
+        List<Pe> peList = new ArrayList<>();
+        for(int i=0;i<numOfPes;i++) {
+            int mips = 1000;
+            peList.add(new Pe(i, new PeProvisionerSimple((double) mips)));
+        }
+
+        return peList;
+    }
+
+    private DatacenterCharacteristics createCharacteristics(List<Host> hostList) {
+        String arch = "x86";
+        String os = "Linux";
+        String vmm = "Xen";
+        double time_zone = 10.0D;
+        double cost = 30.0D;
+        double costPerMem = 30.00D;
+        double costPerStorage = 20.00D;
+        double costPerBw = 10.0D;
+
+        return new DatacenterCharacteristics(arch, os, vmm, hostList,
+                time_zone, cost, costPerMem, costPerStorage, costPerBw);
     }
 }

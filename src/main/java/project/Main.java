@@ -8,9 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
         init();
-
-        AllocationStrategy allocationStrategy = new AllocationStrategy();
-        Simulation simulation = new Simulation(allocationStrategy);
+        Simulation simulation = new Simulation();
         simulation.run();
     }
 
